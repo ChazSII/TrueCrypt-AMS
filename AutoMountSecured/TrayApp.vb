@@ -97,7 +97,9 @@ Public Class TrayApp
 
                     Select Case e.Volume
                         Case VolumeType.Target
-                            UMountTrueCrypt()
+                            If VolumeMonitor.IsSecuredDriveMounted Then
+                                UMountTrueCrypt()
+                            End If
                         Case VolumeType.Secured
                             ' Do nothing at the moment
                     End Select

@@ -12,24 +12,25 @@ Public Class MonitorVolume
 
     Public Event DriveChange(sender As Object, e As StatusChangeEventArgs)
 
-    'Public ReadOnly Property IsSecuredDriveMounted As Boolean
-    '    Get
-    '        If _Secured_Drive_Letter = "" Then
-    '            Return False
-    '        Else
-    '            Return (New IO.DriveInfo(_Secured_Drive_Letter)).IsReady
-    '        End If
-    '    End Get
-    'End Property
-    'Public ReadOnly Property IsTargetDriveMounted As Boolean
-    '    Get
-    '        If TargetDriveLetter = "" Then
-    '            Return False
-    '        Else
-    '            Return (New IO.DriveInfo(TargetDriveLetter)).IsReady
-    '        End If
-    '    End Get
-    'End Property
+    Public ReadOnly Property IsSecuredDriveMounted As Boolean
+        Get
+            If _Secured_Drive_Letter = "" Then
+                Return False
+            Else
+                Return (New IO.DriveInfo(_Secured_Drive_Letter)).IsReady
+            End If
+        End Get
+    End Property
+
+    Public ReadOnly Property IsTargetDriveMounted As Boolean
+        Get
+            If TargetDriveLetter = "" Then
+                Return False
+            Else
+                Return (New IO.DriveInfo(TargetDriveLetter)).IsReady
+            End If
+        End Get
+    End Property
 
     Public ReadOnly Property TargetDriveLetter As String
         Get
