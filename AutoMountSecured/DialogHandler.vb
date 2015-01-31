@@ -11,7 +11,7 @@ Module DialogHandler
     End Sub
 
     Public Sub ExitForm()
-        If MessageBox.Show("Do you really want to exit?", "TrueCrypt - AutoMount", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) = Windows.Forms.DialogResult.Yes Then
+        If MessageBox.Show("Do you really want to exit?", "TrueCrypt-AMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) = Windows.Forms.DialogResult.Yes Then
             Application.Exit()
         End If
     End Sub
@@ -46,18 +46,19 @@ Module DialogHandler
                         If Not IsNothing(SecretKey) Then SecretKey = PasswordForm.PIN & PasswordHash
                         CheckPassword = True
                         Exit Try
-                    Else
-                        SecretKey = Nothing
                     End If
                 Else
                     CheckPassword = Nothing
                 End If
             End Using
         Catch ex As Exception
+            SecretKey = Nothing
             CheckPassword = False
         Finally
             If Not IsNothing(CheckPassword) AndAlso Not CheckPassword Then
-                MessageBox.Show("Incorrect password.", "Error Mounting Volume", MessageBoxButtons.OK)
+                If MessageBox.Show("Password entered is incorrect ", "Error Mounting Volume", MessageBoxButtons.RetryCancel) = DialogResult.Retry Then
+                    CheckPassword = CheckPassword(PasswordHash, SecretKey)
+                End If
             End If
             EnteredPassword = Nothing
         End Try
