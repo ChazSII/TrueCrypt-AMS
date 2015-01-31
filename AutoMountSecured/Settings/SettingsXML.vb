@@ -284,21 +284,13 @@ End Class
 Module CurrentSettingsFile
     Public IsRecovering As Boolean = False
 
-    Public Property CurrentSettings As SettingsXML
+    Private Property _Settings As SettingsXML
         Get
-            If Not IO.File.Exists(My.Settings.SettingsFileName) Then CreateNewSettings()
-
-            Dim NewSettings As SettingsXML
-
             Dim reader As New System.Xml.Serialization.XmlSerializer(GetType(SettingsXML), "")
             Using file As New System.IO.StreamReader(My.Settings.SettingsFileName)
-                NewSettings = CType(reader.Deserialize(file), SettingsXML)
+                Return CType(reader.Deserialize(file), SettingsXML)
             End Using
             reader = Nothing
-
-            If NewSettings.IsCorrupt And Not IsRecovering Then NewOrCorruptSettings(NewSettings)
-
-            Return NewSettings
         End Get
         Set(value As SettingsXML)
             Dim writer As New System.Xml.Serialization.XmlSerializer(GetType(SettingsXML))
@@ -309,12 +301,25 @@ Module CurrentSettingsFile
         End Set
     End Property
 
-    Public Sub NewOrCorruptSettings(ByVal CorruptSettings As SettingsXML)
+    Public Property CurrentSettings As SettingsXML
+        Get
+            If Not IO.File.Exists(My.Settings.SettingsFileName) Then CreateNewSettings()
+
+            If _Settings.IsCorrupt And Not IsRecovering Then NewOrCorruptSettings()
+
+            Return _Settings
+        End Get
+        Set(value As SettingsXML)
+            _Settings = value
+        End Set
+    End Property
+
+    Public Sub NewOrCorruptSettings()
         IsRecovering = True
 
         Do
             If MessageBox.Show("No settings detected or settings are corrupt. Please create settings for a volume or exit.", "Truecrypt - Automap", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.OK Then
-                Using SettingDialog As New Settings(CorruptSettings)
+                Using SettingDialog As New Settings(New SettingsXML)
                     If SettingDialog.ShowDialog = DialogResult.OK Then
                         CurrentSettings = SettingDialog.NewSettings
                         Exit Do

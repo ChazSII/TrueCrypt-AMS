@@ -139,6 +139,20 @@ Public Class TrayApp
 
     Private Sub mnuSetting_Click(sender As Object, e As EventArgs) Handles mnuSetting.Click
         SettingsForm()
+
+        ' Restart the Volume monitor after settings changes
+        VolumeMonitor.Dispose()
+
+        ' Load Settings
+        TARGET_VOLUME = CurrentSettings.DeviceSetings.CONTAINER_LABEL
+        SECURED_LETTER = CurrentSettings.DeviceSetings.SECURED_LETTER
+
+        ' Load the TrueCrypt Driver
+        TrueCryptDriver = New TC_Driver()
+
+        ' Initialize the volume monitor
+        VolumeMonitor = New MonitorVolume
+        VolumeMonitor.StartMonitor(TARGET_VOLUME, SECURED_LETTER)
     End Sub
 
     Private Sub mnuExit_Click(sender As Object, e As System.EventArgs) Handles mnuExit.Click
