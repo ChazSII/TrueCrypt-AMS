@@ -15,6 +15,9 @@ Securely stores a TrueCrypt volume password and automatically mounts the volume 
   - Monitors the attachment and removal of removable devices
   - Raises events when targeted volumes are attached, request removal, or removed
   - Hooks into targeted devices to be notified of removal requests
+* **TrueCrypt Managed Driver** - Rewritten code base inspired by [TrueCryptAPI](https://truecryptapi.codeplex.com/)
+  - Huge rewrites from initial translation, incorporating managed code features
+  - Interfaces with the official TrueCrypt driver 7.1a
 
 
 ## Installation
