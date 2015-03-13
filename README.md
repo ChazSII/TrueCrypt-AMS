@@ -2,19 +2,16 @@
 Securely stores a TrueCrypt volume password and automatically mounts the volume from removable media. Uses the TrueCrypt 7.1a driver
 
 **Includes:**
-* **AutoMountSecured** - Main program
+* **TrueCrypt-AMS** - Main program
   - Runs in the notification tray
   - Listens for removable drives, checking for target
   - Manages the TrueCrypt driver
   - Runs as Administrator
-* **SimpleCrypto** - Fork of [Encryptamajig](https://github.com/jbubriski/Encryptamajig)
+* **Simple-AES256** - Fork of [Encryptamajig](https://github.com/jbubriski/Encryptamajig)
   - Used for encrypting the TrueCrypt volume password and hashing the Master Password
   - Uses managed AES 256 with a 128 bit random salt and random initialization vector
   - Salt and IV are embedded in the CypherText
-* **TrueCryptDriver** - Rewritten code base inspired by [TrueCryptAPI](https://truecryptapi.codeplex.com/)
-  - Huge rewrites from initial translation, incorporating managed code features
-  - Interfaces with the official TrueCrypt driver 7.1a
-* **DeviceMonitor** - Removable Media Monitor inspired by [Detect USB Removal in C#](http://www.codeproject.com/Articles/18062/)
+* **Removable Media Monitor** -  inspired by [Detect USB Removal in C#](http://www.codeproject.com/Articles/18062/)
   - Monitors the attachment and removal of removable devices
   - Raises events when targeted volumes are attached, request removal, or removed
   - Hooks into targeted devices to be notified of removal requests
